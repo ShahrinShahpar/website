@@ -215,31 +215,51 @@ def view_results(job_id):
     return render_template('results.html', job=job, results=results)
 
 
-#download file
+# #download file
+# @app.route('/jobs/<int:job_id>/download')
+# @login_required
+# def download_results(job_id):
+#     if 'user_id' not in session:
+#         return redirect(url_for('login'))
+#     db = get_db()
+#     db.row_factory = sqlite3.Row
+    
+#     cur = db.cursor()
+#     cur.execute("SELECT * FROM jobs WHERE id = ?", (job_id,))
+#     job = cur.fetchone()
+    
+#     cur.execute("SELECT * FROM results WHERE job_id = ?", (job_id,))
+#     result = cur.fetchone()
+    
+#     db.close()
+
+#     if result is not None:
+#         file_name = result['file_path'].split("/")[-1] # extract file name
+#         response = send_file(result['file_path'], as_attachment=True)
+#         response.headers['Content-Disposition'] = f'attachment; filename="{file_name}"'
+#         return response
+#     else:
+#         abort(404)
+
 @app.route('/jobs/<int:job_id>/download')
 @login_required
 def download_results(job_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    db = get_db()
-    db.row_factory = sqlite3.Row
     
-    cur = db.cursor()
-    cur.execute("SELECT * FROM jobs WHERE id = ?", (job_id,))
-    job = cur.fetchone()
-    
-    cur.execute("SELECT * FROM results WHERE job_id = ?", (job_id,))
-    result = cur.fetchone()
-    
-    db.close()
-
-    if result is not None:
-        file_name = result['file_path'].split("/")[-1] # extract file name
-        response = send_file(result['file_path'], as_attachment=True)
-        response.headers['Content-Disposition'] = f'attachment; filename="{file_name}"'
-        return response
-    else:
+    # Get the file path from the file system
+    file_path = f'/var/tmp/results/13.npy'
+    if not os.path.isfile(file_path):
         abort(404)
+    
+    # Extract the file name from the file path
+    file_name = os.path.basename(file_path)
+    
+    # Return the file as an attachment
+    response = send_file(file_path, as_attachment=True)
+    response.headers['Content-Disposition'] = f'attachment; filename="{file_name}"'
+    return response
+
 
 #download image
 @app.route('/download_image/<int:job_id>')
@@ -257,9 +277,9 @@ def download_image(job_id):
     result = cur.fetchone()
     db.close()
     image_name = "13.png"
-    filename = result['file_path'].split("/")[-1].split('.')[0] + '.png'
+    # filename = result['file_path'].split("/")[-1].split('.')[0] + '.png'
     image_path = os.path.join('/var/tmp/results', image_name)
-    return send_file(image_path, as_attachment=True, download_name=filename)
+    return send_file(image_path, as_attachment=True, download_name=image_name)
 
 #logout
         
