@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Upload Form</title>
+  </head>
+  <body>
+    <h1>Submit Job Form</h1>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+      <label for="file">Select a file to upload:</label><br>
+        <input type="file" id="file" name="file" required>
+      <br>
+      <label for="platform">Select a platform:</label>
+        <select name="mydropdown" id="mydropdown">
+          {% for option in options %}
+          <option value="{{ option[0] }}">{{ option[0] }}</option>
+          {% endfor %}
+        </select>
+      <br>
+      <label for="no_of_tests">Number of Tests:</label>
+        <input type="number" name="no_of_tests" required min="1" max="1000">
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    <form action="{{ url_for('show_jobs') }}">
+      <button type="submit">Show Job List</button>
+    </form>    
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form> 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash-message">
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}       
+  </body>
+</html>
+<!-- <script>
+  function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
+</script> -->
+
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+form {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="file"],
+input[type="number"],
+select {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+input[type="submit"],
+button {
+  display: block;
+  width: 100%;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+button:hover {
+  background-color: #3e8e41;
+}
+
+button[type="submit"] {
+  background-color:#3e8e41;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+/* Style for logout button */
+form:last-child button[type="submit"] {
+  background-color: #f44336;
+}
+
+form:last-child button[type="submit"]:hover {
+  background-color: #da190b;
+}
+
+/* Style for form validation error message */
+input:invalid {
+  border-color: #ff6347;
+}
+
+input:invalid:focus {
+  box-shadow: none;
+}
+
+select:invalid {
+  border-color: #ff6347;
+}
+
+select:invalid:focus {
+  box-shadow: none;
+}
+
+.flash-message {
+  padding: 50px;
+  color: green;
+  text-align: center;
+  font-weight: bold;
+}
+.flash-message ul {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+}
+.flash-message li {
+  margin-bottom: 5px;
+}
+
+</style>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+</head>
+<body>
+
+	<h1>Login to Upload Files</h1>
+  <form action="/login" method="POST">
+    <!-- <label for="username">User ID</label>
+    <input type="text" id="userid" name="userid" pattern="\d{9}" required>
+     The pattern attribute above enforces that the user ID must contain exactly 9 digits 
+    <br> -->
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+  
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$" required>
+    <!-- The pattern attribute above enforces that the password must contain at least 8 characters, 
+    at least one uppercase letter, one lowercase letter, one digit, and one special character -->
+    <br>
+
+    <input type="checkbox" onclick="togglePassword()"> Show Password
+		<br>
+  
+    <button type="submit">Log In</button>
+
+    <p>Don't have an account? <a href="/signup">Sign up here</a>.</p>
+    <p>Forgot your password? <a href="/forgot-password">Reset it here</a>.</p>
+  </form>
+  
+  <script>
+    const useridInput = document.getElementById('userid');
+    const passwordInput = document.getElementById('password');
+    const form = document.querySelector('form');
+  
+    form.addEventListener('submit', (event) => {
+      const useridRegex = /^\d{9}$/;
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+      if (!useridRegex.test(useridInput.value)) {
+        alert('User ID must contain exactly 9 digits.');
+        event.preventDefault();
+      }
+      if (!passwordRegex.test(passwordInput.value)) {
+        alert('Password must contain at least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character.');
+        event.preventDefault();
+      }
+    });
+    function togglePassword() {
+			var x = document.getElementById("password");
+			if (x.type === "password") {
+				x.type = "text";
+			} else {
+				x.type = "password";
+			}
+		}
+  </script>
+  </body>
+  </html>
+  <style>
+    body {
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+    }
+    
+    h1 {
+      margin: 100px auto;
+      text-align: center;
+    }
+    
+    form {
+      max-width: 500px;
+      margin: 10px auto;
+      padding: 80px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    input[type="checkbox"] {
+      margin-bottom: 20px;
+    }
+    
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+    p {
+      text-align: center;
+      margin-top: 20px;
+    }
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .alert {
+      background-color: #f2dede;
+      color: #a94442;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ebccd1;
+      border-radius: 4px;
+    }
+    
+  </style>

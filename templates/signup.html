@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signup Page</title>
+</head>
+<body>
+
+	<h1>Create an Account</h1>
+
+	<form action="/signup" method="POST" action="/upload" enctype="multipart/form-data">
+		<!-- <label for="userid">User ID</label>
+  		<input type="text" id="userid" name="userid" pattern="[0-9]{9}" required> -->
+  		<!-- The pattern attribute above enforces that the user ID must be exactly 9 digits long -->
+      	<!-- <br> -->
+		
+		<label for="email">Email</label>
+		<input type="email" id="email" name="email" required>
+		<br>
+		<div class="inputbox">
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$" required>
+		<!-- The pattern attribute above enforces that the password must contain at least 8 characters, 
+		at least one uppercase letter, one lowercase letter, one digit, and one special character -->
+		<label for="confirm-password">Confirm Password</label>
+		<input type="password" id="confirm-password" name="confirm-password" required>
+		
+		
+		<input type="checkbox" onclick="togglePassword()"> Show Password
+		</div>
+		<button type="submit">Sign Up</button>
+		<p>Already have an account? <a href="/login">Log in here</a></p>
+  </form>
+  
+	<script>
+		// const userIdInput = document.getElementById('userid');
+		const emailInput = document.getElementById('email');
+		const passwordInput = document.getElementById('password');
+		const confirmPasswordInput = document.getElementById('confirm-password');
+		const form = document.querySelector('form');
+  
+		form.addEventListener('submit', (event) => {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+			if (!emailRegex.test(emailInput.value)) {
+				alert('Please enter a valid email address.');
+				event.preventDefault();
+				}
+			else if (passwordInput.value !== confirmPasswordInput.value) {
+				alert('Passwords do not match.');
+				event.preventDefault();
+				} 
+			else if (!passwordRegex.test(passwordInput.value)) {
+				alert('Password must contain at least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character.');
+				event.preventDefault();
+				} 
+			// else if (!userIdInput.checkValidity()) {
+			// alert('User ID must be exactly 9 digits long.');
+			// event.preventDefault();
+			// 	}
+			});
+		function togglePassword() {
+			var x = document.getElementById("password");
+			var y = document.getElementById("confirm-password");
+				if (x.type === "password" && y.type === "password") {
+					x.type = "text";
+					y.type = "text";
+				} else {
+					x.type = "password";
+					y.type = "password";
+				}
+			}
+	</script>
+</body>
+</html>
+<style>
+	body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+form {
+  margin: 100px auto;
+  width: 400px;
+  padding: 80px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+input[type="checkbox"] {
+
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+</style>
